@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إضافة كتاب جديد</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+      padding: 50px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      border-radius: 5px;
+    }
+
+    h2, h3 {
+      color: #3498db;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 1.2em;
+    }
+
+    .btn-primary {
+      background-color: #3498db;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="text-center mb-4">إضافة تمرين جديد</h2>
+
+  <form id="postBookForm">
+    <div class="form-group">
+      <label for="title">عنوان التمرين:</label>
+      <input type="text" class="form-control" id="title" required>
+    </div>
+
+    <div class="form-group">
+      <label for="author"> الناشر:</label>
+      <input type="text" class="form-control" id="author" required>
+    </div>
+
+    <div class="form-group">
+      <label for="link">رابط التمرين:</label>
+      <input type="url" class="form-control" id="link" required>
+    </div>
+
+    <div class="form-group">
+      <label for="language">الشعبة :</label>
+      <select class="form-control" id="language" required>
+        <option value="رياضيات">رياضيات</option>
+        <option value="علوم تجربية">علوم تجربية</option>
+        <option value="تقني رياضي">تقني رياضي</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="tag">المادة:</label>
+      <select class="form-control" id="tag" required>
+        <option value="رياضيات">رياضيات</option>
+        <option value="الفيزياء">الفيزياء</option>
+        <option value="فلسفة">فلسفة</option>
+        <option value="اجتماعيات">اجتماعيات</option>
+        <option value="علوم اسلامية">علوم اسلامية</option>
+        <option value="اللغة العربية و ادابها">اللغة العربية و ادابها</option>
+        <option value="اللغة الفرنسية">اللغة الفرنسية</option>
+        <option value="اللغة الانجليزية">اللغة الانجليزية</option>
+        <option value="العلوم التجريبية و الحياة">العلوم التجريبية و الحياة</option>
+      </select>
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="postBook()">نشر التمرين</button>
+  </form>
+
+</div>
+
+<script>
+  function postBook() {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const link = document.getElementById('link').value;
+    const language = document.getElementById('language').value;
+    const tag = document.getElementById('tag').value;
+
+    // Validate required fields
+    if (!title || !author || !link || !tag || !language) {
+      alert('يرجى ملء جميع الحقول المطلوبة.');
+      return;
+    }
+
+    const newBook = {
+      title,
+      author,
+      link,
+      language,
+      tag
+    };
+
+    // Send the book data to the server (you can customize this part based on your backend)
+    fetch('https://circleapi.u1u1u1u1u1u1u1.repl.co/api/post-book', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newBook)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('تمت إضافة التمرين بنجاح!');
+        // Optionally, redirect to the home page or perform other actions
+      } else 
+        alert('حدث خطأ أثناء إضافة التمرين. يرجى المحاولة مرة أخرى.');
+      }
+    })
+    .catch(error => console.error('Error posting book:', error));
+  }
+</script>
+
+</body>
+</html>
