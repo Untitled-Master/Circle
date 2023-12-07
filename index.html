@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موقع تمارين المدرسة الثانوية</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/circled.png">
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .header {
+      background: url('https://images.unsplash.com/photo-1701308450512-d3a2aeeff787?q=80&w=1508&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+      padding: 100px 20px;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 40px;
+      border-bottom: 1px solid #3498db; /* Blue border */
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+
+    .container {
+      padding: 50px;
+    }
+
+    h2, h3 {
+      color: #3498db;
+    }
+
+    .card {
+      background-color: #333;
+      color: #fff;
+      height: 620px;
+      border: 1px solid #3498db; /* Blue border */
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(52, 152, 219, 0.5); /* Lighter blue shadow */
+    }
+
+    .btn-primary {
+      background-color: #3498db;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9;
+    }
+
+    .card-img-top {
+      height: 350px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .filter-container select {
+      flex: 1;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1 class="animate__animated animate__fadeInDown">موقع تمارين المدرسة الثانوية</h1>
+  <p class="lead animate__animated animate__fadeInUp">استكشف تمارين مدرسية رائعة وساهم في تطوير مهاراتك</p>
+</div>
+
+<div class="container">
+  <section>
+    <h2 class="text-center mb-4 animate__animated animate__fadeInDown">التمارين</h2>
+
+    <!-- Filter containers for selecting term and subject -->
+    <div class="filter-container mb-4">
+      <label for="termSelect">اختر الشعبة:</label>
+      <select id="termSelect" class="form-control">
+        <option value="all">الكل</option>
+        <!-- Add more term options as needed -->
+      </select>
+
+      <label for="subjectSelect">اختر المادة:</label>
+      <select id="subjectSelect" class="form-control">
+        <option value="all">الكل</option>
+        <!-- Add more subject options as needed -->
+      </select>
+    </div>
+
+    <div id="exerciseCards" class="row">
+      <!-- Exercise cards will be dynamically added here -->
+    </div>
+  </section>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const termSelect = document.getElementById('termSelect');
+    const subjectSelect = document.getElementById('subjectSelect');
+    const exerciseCardsContainer = document.getElementById('exerciseCards');
+
+    // Load JSON data
+    fetch('https://circleapi.u1u1u1u1u1u1u1.repl.co/api/books')
+      .then(response => response.json())
+      .then(data => {
+        // Generate exercise cards dynamically based on the selected term and subject
+        function generateExerciseCards(selectedTerm, selectedSubject) {
+          // Clear existing exercise cards
+          exerciseCardsContainer.innerHTML = '';
+
+          // Filter exercises based on the selected term and subject
+          const filteredExercises = data.filter(exercise =>
+            (selectedTerm === 'all' || exercise.term === selectedTerm) &&
+            (selectedSubject === 'all' || exercise.subject === selectedSubject)
+          );
+
+          // Generate exercise cards for the filtered exercises
+          filteredExercises.forEach(exercise => {
+            const cardHtml = `
+              <div class="col-lg-4 mb-4">
+                <div class="card animate__animated animate__fadeInLeft">
+                  <img src="${getSubjectImage(exercise.subject)}" class="card-img-top" alt="${exercise.subject}">
+                  <div class="card-body">
+                    <h5 class="card-title">${exercise.title}</h5>
+                    <p class="card-text">
+                      <strong>الشعبة:</strong> ${exercise.term}<br>
+                      <strong>المادة:</strong> ${exercise.subject}<br>
+                      <strong>الناشر:</strong> ${exercise.author}
+                    </p>
+                    <a href="${exercise.link}" class="btn btn-primary">
+                      قم بالتمرن
+                      <i class="fas fa-dumbbell ml-2"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            exerciseCardsContainer.innerHTML += cardHtml;
+          });
+        }
+
+        // Function to get the image URL for each subject
+        function getSubjectImage(subject) {
+          switch (subject) {
+            case 'فلسفة':
+              return 'https://images.unsplash.com/photo-1489619547086-641e1c87c3ff?q=80&w=1436&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+            case 'علوم اسلامية':
+              return 'https://images.unsplash.com/photo-1571824170220-1f6de1f5e300?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with the actual URL
+            case 'اجتماعيات':
+              return 'https://plus.unsplash.com/premium_photo-1661311950994-d263ea9681a1?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with the actual URL
+            case 'اللغة العربية و ادابها':
+              return 'https://images.unsplash.com/photo-1535905496755-26ae35d0ae54?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with the actual URL
+            case 'اللغة الفرنسية':
+              return 'https://images.unsplash.com/photo-1629470937928-5f873c06005c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with the actual URL
+            case 'اللغة الانجليزية':
+              return 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1498&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with the actual URL
+            case 'الفيزياء':
+              return 'https://images.unsplash.com/photo-1534744971734-e1628d37ea01?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with the actual URL
+            case 'العلوم التجريبية و الحياة':
+              return 'https://images.unsplash.com/photo-1532153470116-e8c2088b8ac1?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with the actual URL
+            case 'الرياضيات':
+              return 'https://images.unsplash.com/photo-1632571401005-458e9d244591?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with the actual URL
+            default:
+              return 'https://images.unsplash.com/photo-1682686581740-2c5f76eb86d1?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with a default image URL
+          }
+        }
+
+        // Populate the term dropdown with unique terms from the data
+        const uniqueTerms = [...new Set(data.map(exercise => exercise.term))];
+        uniqueTerms.forEach(term => {
+          const option = document.createElement('option');
+          option.value = term;
+          option.text = term;
+          termSelect.add(option);
+        });
+
+        // Populate the subject dropdown with unique subjects from the data
+        const uniqueSubjects = [...new Set(data.map(exercise => exercise.subject))];
+        uniqueSubjects.forEach(subject => {
+          const option = document.createElement('option');
+          option.value = subject;
+          option.text = subject;
+          subjectSelect.add(option);
+        });
+
+        // Add event listeners to dynamically update exercise cards based on the selected term and subject
+        termSelect.addEventListener('change', function () {
+          generateExerciseCards(this.value, subjectSelect.value);
+        });
+
+        subjectSelect.addEventListener('change', function () {
+          generateExerciseCards(termSelect.value, this.value);
+        });
+
+        // Initially load exercise cards with all exercises
+        generateExerciseCards('all', 'all');
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  });
+</script>
+
+</body>
+</html>
