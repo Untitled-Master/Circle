@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +34,8 @@
       padding: 50px;
     }
 
-    h2, h3 {
+    h2,
+    h3 {
       color: #fff;
     }
 
@@ -77,150 +79,184 @@
       flex: 1;
       margin-right: 10px;
     }
+
+    /* Added styles for the search box */
+    .input-group {
+      margin-right: auto;
+      max-width: 300px;
+    }
+
+    #searchInput {
+      border-radius: 5px;
+    }
+
+    #searchButton {
+      border-radius: 5px;
+    }
   </style>
 </head>
+
 <body>
 
-<div class="header">
-  <h1 class="animate__animated animate__fadeInDown">Circle</h1>
-  <p class="lead animate__animated animate__fadeInUp">استكشف تمارين مدرسية رائعة وساهم في تطوير مهاراتك</p>
-</div>
+  <div class="header">
+    <h1 class="animate__animated animate__fadeInDown">Circle</h1>
+    <p class="lead animate__animated animate__fadeInUp">استكشف تمارين مدرسية رائعة وساهم في تطوير مهاراتك</p>
+  </div>
 
-<div class="container">
-  <section>
-    <h2 class="text-center mb-4 animate__animated animate__fadeInDown">التمارين</h2>
+  <div class="container">
+    <section>
+      <h2 class="text-center mb-4 animate__animated animate__fadeInDown">التمارين</h2>
 
-    <!-- Filter containers for selecting term and subject -->
-    <div class="filter-container mb-4">
-      <label for="termSelect">اختر الشعبة:</label>
-      <select id="termSelect" class="form-control">
-        <option value="all">الكل</option>
-        <!-- Add more term options as needed -->
-      </select>
+      <!-- Filter containers for selecting term and subject -->
+      <div class="filter-container mb-4">
+        <label for="termSelect">اختر الشعبة:</label>
+        <select id="termSelect" class="form-control">
+          <option value="all">الكل</option>
+          <!-- Add more term options as needed -->
+        </select>
 
-      <label for="subjectSelect">اختر المادة:</label>
-      <select id="subjectSelect" class="form-control">
-        <option value="all">الكل</option>
-        <!-- Add more subject options as needed -->
-      </select>
-    </div>
+        <label for="subjectSelect">اختر المادة:</label>
+        <select id="subjectSelect" class="form-control">
+          <option value="all">الكل</option>
+          <!-- Add more subject options as needed -->
+        </select>
 
-    <div id="exerciseCards" class="row">
-      <!-- Exercise cards will be dynamically added here -->
-    </div>
-  </section>
-</div>
+        <!-- Add the search box -->
+        <div class="input-group">
+          <input type="text" id="searchInput" class="form-control" placeholder="ابحث عن تمرين...">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="searchButton">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <div id="exerciseCards" class="row">
+        <!-- Exercise cards will be dynamically added here -->
+      </div>
+    </section>
+  </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const termSelect = document.getElementById('termSelect');
-    const subjectSelect = document.getElementById('subjectSelect');
-    const exerciseCardsContainer = document.getElementById('exerciseCards');
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    // Load JSON data
-    fetch('https://circleapi.u1u1u1u1u1u1u1.repl.co/api/books')
-      .then(response => response.json())
-      .then(data => {
-        // Generate exercise cards dynamically based on the selected term and subject
-        function generateExerciseCards(selectedTerm, selectedSubject) {
-          // Clear existing exercise cards
-          exerciseCardsContainer.innerHTML = '';
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const termSelect = document.getElementById('termSelect');
+      const subjectSelect = document.getElementById('subjectSelect');
+      const exerciseCardsContainer = document.getElementById('exerciseCards');
+      const searchInput = document.getElementById('searchInput');
+      const searchButton = document.getElementById('searchButton');
 
-          // Filter exercises based on the selected term and subject
-          const filteredExercises = data.filter(exercise =>
-            (selectedTerm === 'all' || exercise.term === selectedTerm) &&
-            (selectedSubject === 'all' || exercise.subject === selectedSubject)
-          );
+      // Load JSON data
+      fetch('https://circleapi.u1u1u1u1u1u1u1.repl.co/api/books')
+        .then(response => response.json())
+        .then(data => {
 
-          // Generate exercise cards for the filtered exercises
-          filteredExercises.forEach(exercise => {
-            const cardHtml = `
-              <div class="col-lg-4 mb-4">
-                <div class="card animate__animated animate__fadeInLeft">
-                  <img src="${getSubjectImage(exercise.subject)}" class="card-img-top" alt="${exercise.subject}">
-                  <div class="card-body">
-                    <h5 class="card-title">${exercise.title}</h5>
-                    <p class="card-text">
-                      <strong>الشعبة:</strong> ${exercise.term}<br>
-                      <strong>المادة:</strong> ${exercise.subject}<br>
-                      <strong>الناشر:</strong> ${exercise.author}
-                    </p>
-                    <a href="${exercise.link}" class="btn btn-primary">
-                      قم بالتمرن
-                      <i class="fas fa-dumbbell ml-2"></i>
-                    </a>
+          function filterExercises(selectedTerm, selectedSubject, searchQuery) {
+            // Clear existing exercise cards
+            exerciseCardsContainer.innerHTML = '';
+
+            // Filter exercises based on the selected term, subject, and search query
+            const filteredExercises = data.filter(exercise =>
+              (selectedTerm === 'all' || exercise.term === selectedTerm) &&
+              (selectedSubject === 'all' || exercise.subject === selectedSubject) &&
+              (searchQuery === '' || exercise.title.toLowerCase().includes(searchQuery.toLowerCase()))
+            );
+
+            // Generate exercise cards for the filtered exercises
+            filteredExercises.forEach(exercise => {
+              const cardHtml = `
+                <div class="col-lg-4 mb-4">
+                  <div class="card animate__animated animate__fadeInLeft">
+                    <img src="${getSubjectImage(exercise.subject)}" class="card-img-top" alt="${exercise.subject}">
+                    <div class="card-body">
+                      <h5 class="card-title">${exercise.title}</h5>
+                      <p class="card-text">
+                        <strong>الشعبة:</strong> ${exercise.term}<br>
+                        <strong>المادة:</strong> ${exercise.subject}<br>
+                        <strong>الناشر:</strong> ${exercise.author}
+                      </p>
+                      <a href="${exercise.link}" class="btn btn-primary">
+                        قم بالتمرن
+                        <i class="fas fa-dumbbell ml-2"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            `;
+              `;
 
-            exerciseCardsContainer.innerHTML += cardHtml;
-          });
-        }
-
-        // Function to get the image URL for each subject
-        function getSubjectImage(subject) {
-          switch (subject) {
-            case 'فلسفة':
-              return 'https://untitled-master.github.io/Circle/Backend/images/philo.jpg';
-            case 'علوم اسلامية':
-              return 'https://untitled-master.github.io/Circle/Backend/images/is.jpg'; // Replace with the actual URL
-            case 'اجتماعيات':
-              return 'https://untitled-master.github.io/Circle/Backend/images/gah.jpg'; // Replace with the actual URL
-            case 'اللغة العربية و ادابها':
-              return 'https://untitled-master.github.io/Circle/Backend/images/ar.jpg'; // Replace with the actual URL
-            case 'اللغة الفرنسية':
-              return 'https://untitled-master.github.io/Circle/Backend/images/fr.jpg'; // Replace with the actual URL
-            case 'اللغة الانجليزية':
-              return 'https://untitled-master.github.io/Circle/Backend/images/en.jpg'; // Replace with the actual URL
-            case 'الفيزياء':
-              return 'https://untitled-master.github.io/Circle/Backend/images/physics.jpg'; // Replace with the actual URL
-            case 'العلوم التجريبية و الحياة':
-              return 'https://untitled-master.github.io/Circle/Backend/images/science.jpg'; // Replace with the actual URL
-            case 'الرياضيات':
-              return 'https://untitled-master.github.io/Circle/Backend/images/math.jpg'; // Replace with the actual URL
-            default:
-              return 'https://images.unsplash.com/photo-1682686581740-2c5f76eb86d1?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with a default image URL
+              exerciseCardsContainer.innerHTML += cardHtml;
+            });
           }
-        }
 
-        // Populate the term dropdown with unique terms from the data
-        const uniqueTerms = [...new Set(data.map(exercise => exercise.term))];
-        uniqueTerms.forEach(term => {
-          const option = document.createElement('option');
-          option.value = term;
-          option.text = term;
-          termSelect.add(option);
-        });
+          // Function to get the image URL for each subject
+          // Function to get the image URL for each subject
+          function getSubjectImage(subject) {
+            switch (subject) {
+              case 'فلسفة':
+                return 'https://untitled-master.github.io/Circle/Backend/images/philo.jpg';
+              case 'علوم اسلامية':
+                return 'https://untitled-master.github.io/Circle/Backend/images/is.jpg'; // Replace with the actual URL
+              case 'اجتماعيات':
+                return 'https://untitled-master.github.io/Circle/Backend/images/gah.jpg'; // Replace with the actual URL
+              case 'اللغة العربية و ادابها':
+                return 'https://untitled-master.github.io/Circle/Backend/images/ar.jpg'; // Replace with the actual URL
+              case 'اللغة الفرنسية':
+                return 'https://untitled-master.github.io/Circle/Backend/images/fr.jpg'; // Replace with the actual URL
+              case 'اللغة الانجليزية':
+                return 'https://untitled-master.github.io/Circle/Backend/images/en.jpg'; // Replace with the actual URL
+              case 'الفيزياء':
+                return 'https://untitled-master.github.io/Circle/Backend/images/physics.jpg'; // Replace with the actual URL
+              case 'العلوم التجريبية و الحياة':
+                return 'https://untitled-master.github.io/Circle/Backend/images/science.jpg'; // Replace with the actual URL
+              case 'الرياضيات':
+                return 'https://untitled-master.github.io/Circle/Backend/images/math.jpg'; // Replace with the actual URL
+              default:
+                return 'https://images.unsplash.com/photo-1682686581740-2c5f76eb86d1?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Replace with a default image URL
+            }
+          }
+          // Populate the subject dropdown with unique subjects from the data
+          const uniqueSubjects = [...new Set(data.map(exercise => exercise.subject))];
+          uniqueSubjects.forEach(subject => {
+            const option = document.createElement('option');
+            option.value = subject;
+            option.text = subject;
+            subjectSelect.add(option);
+          });
 
-        // Populate the subject dropdown with unique subjects from the data
-        const uniqueSubjects = [...new Set(data.map(exercise => exercise.subject))];
-        uniqueSubjects.forEach(subject => {
-          const option = document.createElement('option');
-          option.value = subject;
-          option.text = subject;
-          subjectSelect.add(option);
-        });
+          // Add event listener for the search button
+          searchButton.addEventListener('click', function () {
+            const selectedTerm = termSelect.value;
+            const selectedSubject = subjectSelect.value;
+            const searchQuery = searchInput.value.trim();
+            filterExercises(selectedTerm, selectedSubject, searchQuery);
+          });
 
-        // Add event listeners to dynamically update exercise cards based on the selected term and subject
-        termSelect.addEventListener('change', function () {
-          generateExerciseCards(this.value, subjectSelect.value);
-        });
+          // Add event listeners to dynamically update exercise cards based on the selected term and subject
+          termSelect.addEventListener('change', function () {
+            const selectedTerm = this.value;
+            const selectedSubject = subjectSelect.value;
+            const searchQuery = searchInput.value.trim();
+            filterExercises(selectedTerm, selectedSubject, searchQuery);
+          });
 
-        subjectSelect.addEventListener('change', function () {
-          generateExerciseCards(termSelect.value, this.value);
-        });
+          subjectSelect.addEventListener('change', function () {
+            const selectedTerm = termSelect.value;
+            const selectedSubject = this.value;
+            const searchQuery = searchInput.value.trim();
+            filterExercises(selectedTerm, selectedSubject, searchQuery);
+          });
 
-        // Initially load exercise cards with all exercises
-        generateExerciseCards('all', 'all');
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  });
-</script>
+          // Initially load exercise cards with all exercises
+          filterExercises('all', 'all', '');
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    });
+  </script>
 
 </body>
+
 </html>
