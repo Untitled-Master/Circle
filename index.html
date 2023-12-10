@@ -11,88 +11,98 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/circled.png">
   <style>
-    body {
-      background-color: #111;
-      color: #fff;
-      font-family: 'Tajawal', sans-serif;
-    }
+      body {
+        background-color: #111;
+        color: #fff;
+        font-family: 'Tajawal', sans-serif;
+      }
+      
+      .header {
+        background: url('Backend/images/493194.jpg') center/cover no-repeat;
+        padding: 100px 20px;
+        text-align: center;
+        color: #fff;
+        margin-bottom: 40px;
+        border-bottom: 1px solid #fff; /* Blue border */
+      }
+      
+      h1 {
+        font-size: 3em;
+      }
+      
+      .container {
+        padding: 50px;
+      }
+      
+      h2,
+      h3 {
+        color: #fff;
+      }
+      
+      .card {
+        background-color: #333;
+        color: #fff;
+        height: 620px;
+        border: 1px solid #fff; /* Blue border */
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      
+      .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.5); /* Lighter blue shadow */
+      }
+      
+      .btn-primary {
+        background-color: #3498db;
+        border: none;
+        transition: background-color 0.3s;
+      }
+      
+      .btn-primary:hover {
+        background-color: #2980b9;
+      }
+      
+      .card-img-top {
+        height: 350px;
+        width: 100%;
+        object-fit: cover;
+      }
+      
+      .filter-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap; /* Allow items to wrap to the next line on small screens */
+      }
+      
+      .filter-container select {
+        flex: 1;
+        margin-right: 10px;
+        margin-bottom: 10px; /* Add margin at the bottom for spacing */
+      }
+      
+      .input-group {
+        max-width: 300px;
+        margin-right: 10px; /* Add margin to align with the selects on small screens */
+        margin-bottom: 10px; /* Add margin at the bottom for spacing */
+      }
+      
+      #searchInput {
+        border-radius: 5px;
+      }
+      
+      #searchButton {
+        border-radius: 5px;
+      }
+      
+      @media (max-width: 767px) {
+        .input-group {
+          flex: 1;
+          margin-right: 0;
+        }
+      }
 
-    .header {
-      background: url('Backend/images/493194.jpg') center/cover no-repeat;
-      padding: 100px 20px;
-      text-align: center;
-      color: #fff;
-      margin-bottom: 40px;
-      border-bottom: 1px solid #fff; /* Blue border */
-    }
-
-    h1 {
-      font-size: 3em;
-    }
-
-    .container {
-      padding: 50px;
-    }
-
-    h2,
-    h3 {
-      color: #fff;
-    }
-
-    .card {
-      background-color: #333;
-      color: #fff;
-      height: 620px;
-      border: 1px solid #fff; /* Blue border */
-      border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 8px rgba(52, 152, 219, 0.5); /* Lighter blue shadow */
-    }
-
-    .btn-primary {
-      background-color: #3498db;
-      border: none;
-      transition: background-color 0.3s;
-    }
-
-    .btn-primary:hover {
-      background-color: #2980b9;
-    }
-
-    .card-img-top {
-      height: 350px;
-      width: 100%;
-      object-fit: cover;
-    }
-
-    .filter-container {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .filter-container select {
-      flex: 1;
-      margin-right: 10px;
-    }
-
-    /* Added styles for the search box */
-    .input-group {
-      margin-right: auto;
-      max-width: 300px;
-    }
-
-    #searchInput {
-      border-radius: 5px;
-    }
-
-    #searchButton {
-      border-radius: 5px;
-    }
   </style>
 </head>
 
