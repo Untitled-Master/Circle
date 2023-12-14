@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,6 +49,10 @@
       font-size: 16px;
     }
 
+    .login-input#password {
+      text-align: center; /* Center the password box */
+    }
+
     .login-button {
       background-color: #3498db;
       border: none;
@@ -70,13 +75,14 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="login-container">
       <h1 class="login-header">تسجيل دخول</h1>
       <form class="login-form">
         <input type="text" class="login-input" placeholder="اسم المستخدم" id="username" required>
-        <input type="password" class="login-input" placeholder="كلمة المرور" id="password" required>
+        <input type="password" class="login-input" id="password" placeholder="كلمة المرور" required>
         <p class="error-message" id="errorMessage"></p>
         <button type="button" class="login-button" id="loginButton">تسجيل دخول</button>
       </form>
@@ -93,6 +99,18 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      // Check if username or password is empty
-      if (!username || !password) {
-        errorMessage
+      // Add your authentication logic here
+      // For simplicity, let's assume the correct username is 'user' and password is 'password'
+      if (username === 'user' && password === 'password') {
+        // Redirect to index.html
+        window.location.href = 'index.html';
+      } else {
+        // Display error message if authentication fails
+        errorMessage.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+        errorMessage.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+
+</html>
