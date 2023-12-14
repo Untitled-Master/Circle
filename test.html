@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle | Login</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/circled.png">
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .login-container {
+      margin-top: 100px;
+      padding: 50px;
+      background-color: #333;
+      border-radius: 10px;
+      width: 400px;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-input {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .login-button {
+      background-color: #3498db;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .login-button:hover {
+      background-color: #2980b9;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-container">
+      <h1 class="login-header">تسجيل دخول</h1>
+      <form class="login-form">
+        <input type="text" class="login-input" placeholder="اسم المستخدم" id="username" required>
+        <input type="password" class="login-input" placeholder="كلمة المرور" id="password" required>
+        <p class="error-message" id="errorMessage"></p>
+        <button type="button" class="login-button" id="loginButton">تسجيل دخول</button>
+      </form>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    const loginButton = document.getElementById('loginButton');
+    const errorMessage = document.getElementById('errorMessage');
+
+    loginButton.addEventListener('click', function() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Check if username or password is empty
+      if (!username || !password) {
+        errorMessage
