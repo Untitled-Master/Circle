@@ -11,104 +11,102 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/circled.png">
   <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+    }
 
-      body {
-        background-color: #111;
-        color: #fff;
-        font-family: 'Tajawal', sans-serif;
-      }
-      
-      .header {
-        background: url('Backend/images/493194.jpg') center/cover no-repeat;
-        padding: 100px 20px;
-        text-align: center;
-        color: #fff;
-        margin-bottom: 40px;
-        border-bottom: 1px solid #fff; /* Blue border */
-      }
-      
-      h1 {
-        font-size: 3em;
-      }
-      
-      .container {
-        padding: 50px;
-      }
-      
-      h2,
-      h3 {
-        color: #fff;
-      }
-      
-      .card {
-        background-color: #333;
-        color: #fff;
-        height: 620px;
-        border: 1px solid #fff; /* Blue border */
-        border-radius: 10px;
-        overflow: hidden;
-        transition: transform 0.3s, box-shadow 0.3s;
-      }
-      
-      .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.5); /* Lighter blue shadow */
-      }
-      
-      .btn-primary {
-        background-color: #3498db;
-        border: none;
-        transition: background-color 0.3s;
-      }
-      
-      .btn-primary:hover {
-        background-color: #2980b9;
-      }
-      
-      .card-img-top {
-        height: 350px;
-        width: 100%;
-        object-fit: cover;
-      }
-      
-      .filter-container {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap; /* Allow items to wrap to the next line on small screens */
-      }
-      
-      .filter-container select {
-        flex: 1;
-        margin-right: 10px;
-        margin-bottom: 10px; /* Add margin at the bottom for spacing */
-      }
-      
+    .header {
+      background: url('Backend/images/493194.jpg') center/cover no-repeat;
+      padding: 100px 20px;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 40px;
+      border-bottom: 1px solid #fff;
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+
+    .container {
+      padding: 50px;
+    }
+
+    h2,
+    h3 {
+      color: #fff;
+    }
+
+    .card {
+      background-color: #333;
+      color: #fff;
+      height: 620px;
+      border: 1px solid #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(52, 152, 219, 0.5);
+    }
+
+    .btn-primary {
+      background-color: #3498db;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9;
+    }
+
+    .card-img-top {
+      height: 350px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .filter-container select {
+      flex: 1;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .input-group {
+      max-width: 300px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    #searchInput {
+      border-radius: 5px;
+    }
+
+    #searchButton {
+      border-radius: 5px;
+    }
+
+    @media (max-width: 767px) {
       .input-group {
-        max-width: 300px;
-        margin-right: 10px; /* Add margin to align with the selects on small screens */
-        margin-bottom: 10px; /* Add margin at the bottom for spacing */
+        flex: 1;
+        margin-right: 0;
       }
-      
-      #searchInput {
-        border-radius: 5px;
-      }
-      
-      #searchButton {
-        border-radius: 5px;
-      }
-      
-      @media (max-width: 767px) {
-        .input-group {
-          flex: 1;
-          margin-right: 0;
-        }
-      }
-      .footer {
-        text-align: center;
-        margin-top: 20px;
-      }
+    }
 
-
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -127,18 +125,34 @@
     <section>
       <h2 class="text-center mb-4 animate__animated animate__fadeInDown">التمارين</h2>
 
-      <!-- Filter containers for selecting term and subject ... -->
+      <div class="filter-container mb-4">
+        <label for="termSelect">اختر الشعبة:</label>
+        <select id="termSelect" class="form-control">
+          <option value="all">الكل</option>
+        </select>
+
+        <label for="subjectSelect">اختر المادة:</label>
+        <select id="subjectSelect" class="form-control">
+          <option value="all">الكل</option>
+        </select>
+
+        <div class="input-group">
+          <input type="text" id="searchInput" class="form-control" placeholder="ابحث عن تمرين...">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="searchButton">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div id="exerciseCards" class="row">
-        <!-- Exercise cards will be dynamically added here -->
       </div>
     </section>
 
-    <!-- New section for last 3 uploads -->
     <section>
       <h2 class="text-center mb-4 animate__animated animate__fadeInDown">آخر 3 تحميلات</h2>
       <div id="lastUploads" class="row">
-        <!-- Last uploads will be dynamically added here -->
       </div>
     </section>
   </div>
@@ -155,30 +169,24 @@
       const searchInput = document.getElementById('searchInput');
       const searchButton = document.getElementById('searchButton');
       const documentCountElement = document.getElementById('documentCount');
-      const lastUploadsContainer = document.getElementById('lastUploads');
 
       let totalDocuments = 0;
 
-      // Load JSON data
       fetch('https://circleapi.u1u1u1u1u1u1u1.repl.co/api/books')
         .then(response => response.json())
         .then(data => {
           function filterExercises(selectedTerm, selectedSubject, searchQuery) {
-            // Clear existing exercise cards
             exerciseCardsContainer.innerHTML = '';
 
-            // Filter exercises based on the selected term, subject, and search query
             const filteredExercises = data.filter(exercise =>
               (selectedTerm === 'all' || exercise.term === selectedTerm) &&
               (selectedSubject === 'all' || exercise.subject === selectedSubject) &&
               (searchQuery === '' || exercise.title.toLowerCase().includes(searchQuery.toLowerCase()))
             );
 
-            // Update the document count
             totalDocuments = filteredExercises.length;
             documentCountElement.textContent = totalDocuments;
 
-            // Generate exercise cards for the filtered exercises
             filteredExercises.forEach(exercise => {
               const cardHtml = `
                 <div class="col-lg-4 mb-4">
@@ -204,7 +212,6 @@
             });
           }
 
-          // Populate the subject dropdown with unique subjects from the data
           const uniqueSubjects = [...new Set(data.map(exercise => exercise.subject))];
           uniqueSubjects.forEach(subject => {
             const option = document.createElement('option');
@@ -213,7 +220,6 @@
             subjectSelect.add(option);
           });
 
-          // Add event listener for the search button
           searchButton.addEventListener('click', function () {
             const selectedTerm = termSelect.value;
             const selectedSubject = subjectSelect.value;
@@ -221,7 +227,6 @@
             filterExercises(selectedTerm, selectedSubject, searchQuery);
           });
 
-          // Add event listeners to dynamically update exercise cards based on the selected term and subject
           termSelect.addEventListener('change', function () {
             const selectedTerm = this.value;
             const selectedSubject = subjectSelect.value;
@@ -236,15 +241,38 @@
             filterExercises(selectedTerm, selectedSubject, searchQuery);
           });
 
-          // Initially load exercise cards with all exercises
           filterExercises('all', 'all', '');
         })
         .catch(error => console.error('Error fetching data:', error));
 
-      // Function to get the image URL for each subject ...
+      function getSubjectImage(subject) {
+        switch (subject) {
+          case 'فلسفة':
+            return 'https://untitled-master.github.io/Circle/Backend/images/philo.jpg';
+          case 'علوم اسلامية':
+            return 'https://untitled-master.github.io/Circle/Backend/images/is.jpg';
+          case 'اجتماعيات':
+            return 'https://untitled-master.github.io/Circle/Backend/images/gah.jpg';
+          case 'اللغة العربية و ادابها':
+            return 'https://untitled-master.github.io/Circle/Backend/images/ar.jpg';
+          case 'اللغة الفرنسية':
+            return 'https://untitled-master.github.io/Circle/Backend/images/fr.jpg';
+          case 'اللغة الانجليزية':
+            return 'https://untitled-master.github.io/Circle/Backend/images/en.jpg';
+          case 'الفيزياء':
+            return 'https://untitled-master.github.io/Circle/Backend/images/physics.jpg';
+          case 'العلوم التجريبية و الحياة':
+            return 'https://untitled-master.github.io/Circle/Backend/images/science.jpg';
+          case 'الرياضيات':
+            return 'https://untitled-master.github.io/Circle/Backend/images/math.jpg';
+          default:
+            return 'https://images.unsplash.com/photo-1682686581740-2c5f76eb86d1?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+        }
+      }
     });
   </script>
 
 </body>
 
 </html>
+
