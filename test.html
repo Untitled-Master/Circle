@@ -4,112 +4,247 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Circle | Login</title>
+  <title>Circle</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/circled.png">
   <style>
-    body {
-      background-color: #111;
-      color: #fff;
-      font-family: 'Tajawal', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
 
-    .login-container {
-      padding: 50px;
-      background-color: #333;
-      border-radius: 10px;
-      width: 400px;
-      max-width: 100%;
-      text-align: center; /* Center the content */
-    }
+      body {
+        background-color: #111;
+        color: #fff;
+        font-family: 'Tajawal', sans-serif;
+      }
+      
+      .header {
+        background: url('Backend/images/493194.jpg') center/cover no-repeat;
+        padding: 100px 20px;
+        text-align: center;
+        color: #fff;
+        margin-bottom: 40px;
+        border-bottom: 1px solid #fff; /* Blue border */
+      }
+      
+      h1 {
+        font-size: 3em;
+      }
+      
+      .container {
+        padding: 50px;
+      }
+      
+      h2,
+      h3 {
+        color: #fff;
+      }
+      
+      .card {
+        background-color: #333;
+        color: #fff;
+        height: 620px;
+        border: 1px solid #fff; /* Blue border */
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      
+      .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.5); /* Lighter blue shadow */
+      }
+      
+      .btn-primary {
+        background-color: #3498db;
+        border: none;
+        transition: background-color 0.3s;
+      }
+      
+      .btn-primary:hover {
+        background-color: #2980b9;
+      }
+      
+      .card-img-top {
+        height: 350px;
+        width: 100%;
+        object-fit: cover;
+      }
+      
+      .filter-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap; /* Allow items to wrap to the next line on small screens */
+      }
+      
+      .filter-container select {
+        flex: 1;
+        margin-right: 10px;
+        margin-bottom: 10px; /* Add margin at the bottom for spacing */
+      }
+      
+      .input-group {
+        max-width: 300px;
+        margin-right: 10px; /* Add margin to align with the selects on small screens */
+        margin-bottom: 10px; /* Add margin at the bottom for spacing */
+      }
+      
+      #searchInput {
+        border-radius: 5px;
+      }
+      
+      #searchButton {
+        border-radius: 5px;
+      }
+      
+      @media (max-width: 767px) {
+        .input-group {
+          flex: 1;
+          margin-right: 0;
+        }
+      }
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+      }
 
-    .login-header {
-      margin-bottom: 30px;
-    }
 
-    .login-form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .login-input {
-      margin-bottom: 15px;
-      padding: 10px;
-      border: 1px solid #fff;
-      border-radius: 5px;
-      background-color: #333;
-      color: #fff;
-      font-size: 16px;
-    }
-
-    .login-input#password {
-      text-align: center; /* Center the password box */
-    }
-
-    .login-button {
-      background-color: #3498db;
-      border: none;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .login-button:hover {
-      background-color: #2980b9;
-    }
-
-    .error-message {
-      color: red;
-      font-size: 14px;
-      margin-top: 10px;
-      display: none;
-    }
   </style>
 </head>
 
 <body>
-  <div class="login-container">
-    <h1 class="login-header">تسجيل دخول</h1>
-    <form class="login-form">
-      <input type="text" class="login-input" placeholder="اسم المستخدم" id="username" required>
-      <input type="password" class="login-input" id="password" placeholder="كلمة المرور" required>
-      <p class="error-message" id="errorMessage"></p>
-      <button type="button" class="login-button" id="loginButton">تسجيل دخول</button>
-    </form>
+
+  <div class="header">
+    <h1 class="animate__animated animate__fadeInDown">Circle</h1>
+    <p class="lead animate__animated animate__fadeInUp">استكشف تمارين مدرسية رائعة وساهم في تطوير مهاراتك</p>
   </div>
+
+  <div class="footer text-center mt-4">
+    <p>عدد الملفات المرفوعة: <span id="documentCount">0</span></p>
+  </div>
+
+  <div class="container">
+    <section>
+      <h2 class="text-center mb-4 animate__animated animate__fadeInDown">التمارين</h2>
+
+      <!-- Filter containers for selecting term and subject ... -->
+
+      <div id="exerciseCards" class="row">
+        <!-- Exercise cards will be dynamically added here -->
+      </div>
+    </section>
+
+    <!-- New section for last 3 uploads -->
+    <section>
+      <h2 class="text-center mb-4 animate__animated animate__fadeInDown">آخر 3 تحميلات</h2>
+      <div id="lastUploads" class="row">
+        <!-- Last uploads will be dynamically added here -->
+      </div>
+    </section>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
   <script>
-    const loginButton = document.getElementById('loginButton');
-    const errorMessage = document.getElementById('errorMessage');
+    document.addEventListener("DOMContentLoaded", function () {
+      const termSelect = document.getElementById('termSelect');
+      const subjectSelect = document.getElementById('subjectSelect');
+      const exerciseCardsContainer = document.getElementById('exerciseCards');
+      const searchInput = document.getElementById('searchInput');
+      const searchButton = document.getElementById('searchButton');
+      const documentCountElement = document.getElementById('documentCount');
+      const lastUploadsContainer = document.getElementById('lastUploads');
 
-    loginButton.addEventListener('click', function() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+      let totalDocuments = 0;
 
-      // Add your authentication logic here
-      // For simplicity, let's assume the correct username is 'user' and password is 'password'
-      if (username === 'user' && password === 'password') {
-        // Redirect to index.html
-        window.location.href = 'index.html';
-      } else {
-        // Display error message if authentication fails
-        errorMessage.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
-        errorMessage.style.display = 'block';
-      }
+      // Load JSON data
+      fetch('https://circleapi.u1u1u1u1u1u1u1.repl.co/api/books')
+        .then(response => response.json())
+        .then(data => {
+          function filterExercises(selectedTerm, selectedSubject, searchQuery) {
+            // Clear existing exercise cards
+            exerciseCardsContainer.innerHTML = '';
+
+            // Filter exercises based on the selected term, subject, and search query
+            const filteredExercises = data.filter(exercise =>
+              (selectedTerm === 'all' || exercise.term === selectedTerm) &&
+              (selectedSubject === 'all' || exercise.subject === selectedSubject) &&
+              (searchQuery === '' || exercise.title.toLowerCase().includes(searchQuery.toLowerCase()))
+            );
+
+            // Update the document count
+            totalDocuments = filteredExercises.length;
+            documentCountElement.textContent = totalDocuments;
+
+            // Generate exercise cards for the filtered exercises
+            filteredExercises.forEach(exercise => {
+              const cardHtml = `
+                <div class="col-lg-4 mb-4">
+                  <div class="card animate__animated animate__fadeInLeft">
+                    <img src="${getSubjectImage(exercise.subject)}" class="card-img-top" alt="${exercise.subject}">
+                    <div class="card-body">
+                      <h5 class="card-title">${exercise.title}</h5>
+                      <p class="card-text">
+                        <strong>الشعبة:</strong> ${exercise.term}<br>
+                        <strong>المادة:</strong> ${exercise.subject}<br>
+                        <strong>الناشر:</strong> ${exercise.author}
+                      </p>
+                      <a href="${exercise.link}" class="btn btn-primary" target="_blank">
+                        قم بالتمرن
+                        <i class="fas fa-dumbbell ml-2"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              `;
+
+              exerciseCardsContainer.innerHTML += cardHtml;
+            });
+          }
+
+          // Populate the subject dropdown with unique subjects from the data
+          const uniqueSubjects = [...new Set(data.map(exercise => exercise.subject))];
+          uniqueSubjects.forEach(subject => {
+            const option = document.createElement('option');
+            option.value = subject;
+            option.text = subject;
+            subjectSelect.add(option);
+          });
+
+          // Add event listener for the search button
+          searchButton.addEventListener('click', function () {
+            const selectedTerm = termSelect.value;
+            const selectedSubject = subjectSelect.value;
+            const searchQuery = searchInput.value.trim();
+            filterExercises(selectedTerm, selectedSubject, searchQuery);
+          });
+
+          // Add event listeners to dynamically update exercise cards based on the selected term and subject
+          termSelect.addEventListener('change', function () {
+            const selectedTerm = this.value;
+            const selectedSubject = subjectSelect.value;
+            const searchQuery = searchInput.value.trim();
+            filterExercises(selectedTerm, selectedSubject, searchQuery);
+          });
+
+          subjectSelect.addEventListener('change', function () {
+            const selectedTerm = termSelect.value;
+            const selectedSubject = this.value;
+            const searchQuery = searchInput.value.trim();
+            filterExercises(selectedTerm, selectedSubject, searchQuery);
+          });
+
+          // Initially load exercise cards with all exercises
+          filterExercises('all', 'all', '');
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+      // Function to get the image URL for each subject ...
     });
   </script>
+
 </body>
 
 </html>
